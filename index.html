@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Memory Puzzle Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>🎮 Memory Puzzle</h1>
+
+  <div class="game-info">
+    <div id="level-info">Level: Buah</div>
+    <div id="timer">⏱️ 60</div>
+    <div id="score">⭐ Skor: 0</div>
+    <div id="highscore">🏆 Rekor: 0</div>
+  </div>
+
+  <div id="progress-bar"><div id="progress-fill"></div></div>
+
+
+  <div id="game-board"></div>
+
+  <div class="controls">
+    <button onclick="restartGame()">🔁 Mulai Ulang</button>
+    <button onclick="toggleSound()" id="sound-btn">🔊 Sound: ON</button>
+    <select id="level-select" onchange="changeLevel()"></select>
+    <button onclick="toggleTheme()">🌙 Mode Gelap</button>
+  </div>
+
+  <div id="overlay-status"></div>
+
+  <audio id="sound-match" src="sounds/match.mp3"></audio>
+  <audio id="sound-wrong" src="sounds/wrong.mp3"></audio>
+  <audio id="sound-win" src="sounds/win.mp3"></audio>
+  <audio id="sound-timeup" src="sounds/timeup.mp3"></audio>
+  <audio id="sound-click" src="sounds/click.mp3"></audio>
+<audio id="sound-flip" src="sounds/flip.mp3"></audio>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>

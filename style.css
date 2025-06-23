@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Poppins:wght@400;600&family=Rubik:wght@400;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #FFF3E0, #FFEBEE);
+  color: #333;
+  text-align: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-family: 'Rubik', sans-serif;
+  color: #ff4d6d;
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+  text-shadow: 2px 2px #fff;
+}
+
+.game-info {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.game-info div {
+  background: #fff;
+  padding: 5px 12px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  font-weight: 600;
+}
+
+#progress-bar {
+  width: 100%;
+  max-width: 600px;
+  height: 12px;
+  background: #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 0 auto 20px;
+}
+
+#progress-fill {
+  width: 100%;
+  height: 100%;
+  background: #4caf50;
+  transition: width 0.2s linear, background 0.3s ease;
+}
+
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 12px;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+button, select {
+  font-family: 'Poppins', sans-serif;
+  padding: 10px 18px;
+  background: linear-gradient(145deg, #ff9aa2, #ff7c94);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover, select:hover {
+  background: linear-gradient(145deg, #ff6f91, #ff4d6d);
+  transform: scale(1.05);
+}
+
+select {
+  background: #ff9aa2;
+  color: #fff;
+  padding-left: 12px;
+  font-weight: 600;
+}
+
+select option {
+  background-color: #ff6f91;
+  color: #fff3f7;
+}
+
+.card {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  perspective: 1000px;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover .card-inner {
+  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg) scale(1.05);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.card-front {
+  background: radial-gradient(circle, #ff9aa2, #ff6f91);
+  border: 2px solid rgba(255,255,255,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.card-front::after {
+  content: "🎲";
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  overflow: hidden;
+  background: #fff;         /* Tetap PUTIH untuk mode terang */
+  border-radius: 15px;
+  border: 3px solid #5cd2c6;
+}
+
+body.dark-mode .card-back {
+  background: #222;         /* GELAP hanya aktif saat dark-mode */
+  border-color: #00cec9;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#overlay-status {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+#overlay-status.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+#overlay-status .message {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  text-align: center;
+  animation: popup 0.5s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+@keyframes popup {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+#overlay-status.win .message {
+  background: #e9f7ef;
+  color: #2ecc71;
+}
+
+#overlay-status.game-over .message {
+  background: #fdecea;
+  color: #e74c3c;
+}
+
+@media (max-width: 500px) {
+  #game-board {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  }
+  .controls {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* dark mode */
+body.dark-mode {
+  background: linear-gradient(135deg, #1e1e1e, #333);
+  color: #f5f5f5;
+}
+
+body.dark-mode .game-info div {
+  background: #2c2c2c;
+  color: #f5f5f5;
+}
+
+body.dark-mode #progress-bar {
+  background: #555;
+}
+
+body.dark-mode #progress-fill {
+  background: #00b894;
+}
+
+body.dark-mode .card-front {
+  background: radial-gradient(circle, #555, #333);
+  border: 2px solid rgba(255,255,255,0.2);
+}
+
+body.dark-mode .card-back {
+  background: #222;
+  border-color: #00cec9;
+}
+
+body.dark-mode button, body.dark-mode select {
+  background: linear-gradient(145deg, #636e72, #2d3436);
+  color: #f5f5f5;
+}
+
+body.dark-mode button:hover, body.dark-mode select:hover {
+  background: linear-gradient(145deg, #00cec9, #0984e3);
+}
+
+body.dark-mode select option {
+  background: #333;
+  color: #f5f5f5;
+}
